@@ -105,6 +105,12 @@ An important point is that if the input source supports zero-copy reads
 (e.g. like a memory map, or ``pyarrow.BufferReader``), then the returned
 batches are also zero-copy and do not allocate any new memory on read.
 
+However you decide to interface with the sink buffer object, it must be
+closed when you are finished with it. In the above example 
+:func:`~pyarrow.BufferOutputStream.getvalue` both closes and returns the buffer.
+If the return object is not needed call :func:`~pyarrow.BufferOutputStream.close`
+to avoid data corruption issues.
+
 Writing and Reading Random Access Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
